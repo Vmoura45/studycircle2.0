@@ -1,3 +1,5 @@
+// studycircle-frontend/app/_error/page.js
+
 'use client';
 
 import { useEffect } from 'react';

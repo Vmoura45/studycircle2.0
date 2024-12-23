@@ -1,3 +1,5 @@
+// studycircle-frontend/app/_not-found/page.js
+
 import Link from 'next/link';
 
 export default function NotFound() {

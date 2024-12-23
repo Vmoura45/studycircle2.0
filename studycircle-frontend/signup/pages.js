@@ -1,3 +1,4 @@
+// studycircle-frontend/app/signup/page.js
 "use client"
 import SignupForm from '../../components/Auth/SignupForm';
 

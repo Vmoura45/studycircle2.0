@@ -1,5 +1,6 @@
-"use client";
-import { useState, useEffect } from "react";
+// studycircle-frontend/components/Auth/LoginForm.js
+
+import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
@@ -8,32 +9,20 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    const token = localStorage.getItem('access_token');
-    if (token) {
-    setIsLoggedIn(true);
-    }
-}, []);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+    setError(null);
 
-useEffect(() => {
-    if (isLoggedIn) {
-    router.push('/');
-    }
-}, [isLoggedIn, router]);
-
-  async function handleSubmit(_event) {
-    // ...
     try {
       const response = await axios.post(
         "http://localhost:8000/users/token",
-        // Alteração aqui: Usar um objeto simples em vez de new URLSearchParams
-        {
+        new URLSearchParams({
           username: email,
           password: password,
-        },
+        }),
         {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -42,23 +31,20 @@ useEffect(() => {
       );
       const { data } = response;
 
-      // ... restante do código ...
       console.log("Resposta da API (login):", data);
 
       if (data.access_token) {
         localStorage.setItem("access_token", data.access_token);
         console.log("Login bem-sucedido! Token:", data.access_token);
-        setIsLoggedIn(true);
+        router.push("/");
       } else {
         setError("Falha no login. Resposta inesperada da API.");
       }
     } catch (error) {
       console.error("Erro no login:", error);
-      const { response: { data: { detail }, status } } = error;
+      const { response: { data: { detail } = {}, status } = {} } = error;
       if (error.response) {
-        setError(
-          `Falha no login: ${detail || status}`
-        );
+        setError(`Falha no login: ${detail || status}`);
       } else if (error.request) {
         setError("Falha no login: O servidor não respondeu.");
       } else {
@@ -67,7 +53,7 @@ useEffect(() => {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
