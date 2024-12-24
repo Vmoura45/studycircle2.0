@@ -1,5 +1,7 @@
+// studycircle-frontend/components/Auth/LoginForm.js
+
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
@@ -8,21 +10,7 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      router.push("/");
-    }
-  }, [isLoggedIn, router]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -42,7 +30,7 @@ function LoginForm() {
           },
         }
       );
-      
+
       const { data } = response;
 
       console.log("Resposta da API (login):", data);
@@ -50,17 +38,20 @@ function LoginForm() {
       if (data.access_token) {
         localStorage.setItem("access_token", data.access_token);
         console.log("Login bem-sucedido! Token:", data.access_token);
-        setIsLoggedIn(true);
+        router.push("/");
       } else {
         setError("Falha no login. Resposta inesperada da API.");
       }
     } catch (error) {
       console.error("Erro no login:", error);
-      const { response: { data : { detail } = {}, status } = {} } = error;
+      const {
+        response: {
+          data: { detail } = {},
+          status,
+        } = {},
+      } = error;
       if (error.response) {
-        setError(
-          `Falha no login: ${ detail || status }`
-        );
+        setError(`Falha no login: ${detail || status}`);
       } else if (error.request) {
         setError("Falha no login: O servidor não respondeu.");
       } else {

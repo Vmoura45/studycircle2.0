@@ -15,7 +15,7 @@ function SignupForm() {
     setError(null);
 
     try {
-      const response = await axios.post("http://localhost:8000/users/", {
+      const response = await axios.post("http://localhost:8000/api/users", {
         email,
         password,
       });
@@ -31,7 +31,12 @@ function SignupForm() {
       }
     } catch (error) {
       console.error("Erro no cadastro:", error);
-      const { response: { data: { detail } = {}, status } = {} } = error;
+      const {
+        response: {
+          data: { detail } = {},
+          status,
+        } = {},
+      } = error;
       if (error.response) {
         setError(detail || `Erro ao cadastrar usuário. Status: ${status}`);
       } else {
