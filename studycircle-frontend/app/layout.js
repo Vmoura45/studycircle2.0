@@ -1,5 +1,5 @@
 // studycircle-frontend/app/layout.js
-import '../styles/globals.css'; 
+import '../styles/globals.css';
 
 export const metadata = {
     title: 'StudyCircle',
@@ -7,9 +7,9 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-    return (
-        <html lang="pt-br">
-            <body>{children}</body>
-        </html>
-    );
+  return (
+    <html lang="pt-br">
+      <body>{children}</body>
+    </html>
+  );
 }

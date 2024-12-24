@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Adicione seus estilos globais aqui */
+/* Adicione seus estilos globais aqui, se necessário */
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;

@@ -1,4 +1,3 @@
-// studycircle-frontend/app/page.js
 import Link from 'next/link';
 
 export default function Home() {
@@ -9,7 +8,6 @@ export default function Home() {
         <p className="text-lg text-gray-600 dark:text-gray-400">
           Uma plataforma para compartilhar planos de aula e materiais educacionais.
         </p>
-        {/* Links para Login e Cadastro */}
         <div className="flex gap-4">
           <Link href="/login" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Login
@@ -20,7 +18,6 @@ export default function Home() {
         </div>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        {/* Rodapé - Adicione conteúdo aqui se necessário */}
       </footer>
     </div>
   );
